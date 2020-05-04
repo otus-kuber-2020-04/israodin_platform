@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata: 
-    name: hw-web
+    name: web
     labels:
-        app: hw-web
+        app: web
 spec:
     containers:
     - name: hw-web
