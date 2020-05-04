@@ -9,7 +9,4 @@ spec:
   containers:
   - image: israodin/hipster_fe:v0.0.1
     name: frontend
-    resources: {}
-  dnsPolicy: ClusterFirst
-  restartPolicy: Never
-status: {}
+   
