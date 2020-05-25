@@ -10,4 +10,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ken
-  namesapace: dev
+  namespace: dev
