@@ -1,0 +1,13 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8.io/v1
+metadata:
+  name: jane
+  namespace: dev
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8.io
+subjects:
+- kind: ServiceAccount
+  name: jane
+  namesapace: dev
