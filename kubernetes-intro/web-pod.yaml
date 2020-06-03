@@ -8,6 +8,14 @@ spec: # Описание Pod
   containers: # Описание контейнеров внутри Pod
   - name: web # Название контейнера
     image: israodin/otus_kube:v0.0.1-intro # Образ из которого создается контейнер
+    #--------BEGIN-------
+    livenessProbe:
+      tcpSocket: { port: 8000}
+    readinessProbe:
+      httpGet:
+        path: /index.html
+        port: 8000
+    # ------- END -----
     volumeMounts:
     - name: app
       mountPath: /app    
