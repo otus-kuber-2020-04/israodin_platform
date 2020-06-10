@@ -79,12 +79,14 @@ $ gcloud container clusters get-credentials dos-terraform-edu-gke --region us-ce
 ```
 gcloud beta container clusters get-credentials name_cluster --region us-central1 --project name_project
 
+gcloud beta container clusters get-credentials infra-279617-gke --region us-central1 --project infra-279617
+
 The
 [Kubernetes Cluster Name](https://github.com/hashicorp/learn-terraform-provision-gke-cluster/blob/master/gke.tf#L63)
 and [Region](https://github.com/hashicorp/learn-terraform-provision-gke-cluster/blob/master/vpc.tf#L29)
  correspond to the resources spun up by Terraform.
 
-## Deploy and access Kubernetes Dashboard
+## Deploy and access Kubernetes Dashboard  infra-279617-gke
 
 To deploy the Kubernetes dashboard, run the following command. This will schedule 
 the resources necessary for the dashboard.

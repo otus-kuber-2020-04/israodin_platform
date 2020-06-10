@@ -45,13 +45,20 @@ helm charts
 - хранилище артефактов общего назначения (Docker
 
 Registry), поддерживающее helm charts
-nginx-ingress
+###nginx-ingress
+helm3 install nginx-ingress stable/nginx-ingress
 
-cert-manager
+###cert-manager
+helm3 repo add jetstack https://charts.jetstack.io
+helm3 install --name my-release --namespace cert-manager jetstack/cert-manager
 
-chartmuseum
+###chartmuseum
+helm3 install my-chartmuseum -f custom.yaml stable/chartmuseum
 
-harbor
+###harbor
+helm3 repo add harbor https://helm.goharbor.io
+helm3 install harbor harbor/harbor
+
 
 Избавляем бизнес от ИТ-зависимости
 
