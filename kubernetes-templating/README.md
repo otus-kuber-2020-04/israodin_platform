@@ -49,8 +49,9 @@ Registry), поддерживающее helm charts
 helm3 install nginx-ingress stable/nginx-ingress
 
 ###cert-manager
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager-legacy.crds.yaml
 helm3 repo add jetstack https://charts.jetstack.io
-helm3 install --name my-release --namespace cert-manager jetstack/cert-manager
+helm3 install cert-manager --namespace cert-manager jetstack/cert-manager
 
 ###chartmuseum
 helm3 install my-chartmuseum -f custom.yaml stable/chartmuseum
