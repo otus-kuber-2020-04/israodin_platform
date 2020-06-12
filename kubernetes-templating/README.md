@@ -1,3 +1,16 @@
+
+###install nginx-ingress
+helm3 repo add stable https://kubernetes-charts.storage.googleapis.com
+helm3 repo  list
+kubectl create ns nginx-ingress
+helm3 upgrade --install nginx-ingress stable/nginx-ingress --wait  --namespace=nginx-ingress--version=1.11.1
+
+####install cert-manager
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release- 0.9/deploy/manifests/00-crds.yaml
+kubectl create ns cert-manager
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation="true"
+helm upgrade --install cert-manager jetstack/cert-manager --wait  --namespace=cert-manager --version=0.9.0
+
 Перед началом работы над домашним заданием вам
 необходимо:
 1. Любым удобным способом (через web console, через gcloud, с
