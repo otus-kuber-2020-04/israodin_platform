@@ -26,7 +26,7 @@ releases:
     chart: incubator/raw
     version: 0.2.3
     values: 
-      - cert-manager/values.yaml
+      - ./cert-manager/values.yaml
 
   - name: harbor
     needs:
@@ -35,7 +35,7 @@ releases:
     chart: harbor/harbor
     version: 1.3.2
     values: 
-     - harbor/values.yaml
+     - ./harbor/values.yaml
 
   - name: chartmuseum
     needs:
@@ -44,4 +44,4 @@ releases:
     chart: stable/chartmuseum
     version: 2.13.0
     values: 
-     - chartmuseum/values.yaml
+     - ./chartmuseum/values.yaml
