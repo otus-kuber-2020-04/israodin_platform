@@ -21,4 +21,3 @@ spec:
     - example.com
   secretName: selfsigned-cert-tls
   issuerRef:
-    name: test-selfsigned
