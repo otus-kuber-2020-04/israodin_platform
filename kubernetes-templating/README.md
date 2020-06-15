@@ -6,11 +6,13 @@ kubectl create ns nginx-ingress
 helm3 upgrade --install nginx-ingress stable/nginx-ingress --wait  --namespace=nginx-ingress --version=1.39.0
 
 ####install cert-manager
+helm3 repo add jetstack https://charts.jetstack.io
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager-legacy.crds.yaml
 kubectl create ns cert-manager
-#kubectl label namespace cert-manager certmanager.k8s.io/disable-validation="true"
 helm3 upgrade --install cert-manager jetstack/cert-manager --wait  --namespace=cert-manager --version=0.15.1
 helm3 install cert-manager jetstack/cert-manager  --namespace cert-manager  --version v0.15.1 
+kubectl apply -f cluster-issuer-prod.yaml
+kkubectl apply -f cluster-issuer-stage.yaml
 
 ###install chartmuseum
 kubectl create ns chartmuseum
@@ -63,3 +65,53 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 
+Создаем свой helm chart
+helm create kubernetes-templating/hipster-shop
+**********************************************************
+Mы будем создавать chart для приложения с нуля, поэтому
+удалите values.yaml и содержимое templates.
+После этого перенесите https://github.com/express42/otus-platform-snippets/blob/master/Module-04/05-Templating/manifests/all-hipster-shop.yaml all-hipster-shop.yaml в
+директорию templates.
+*******************************************
+kubectl create ns hipster-shop
+helm3 upgrade --install hipster-shop kubernetes-templating/hipster-shop --namespace hipster-shop
+
+helm create kubernetes-templating/frontend
+**************************************************************************************
+Аналогично чарту hipster-shop удалите файл values.yaml и
+файлы в директории templates, создаваемые по умолчанию.
+Выделим из файла all-hipster-shop.yaml манифесты для
+установки микросервиса frontend.
+В директории templates чарта frontend создайте файлы:
+deployment.yaml - должен содержать соответствующую часть из
+файла all-hipster-shop.yaml
+service.yaml - должен содержать соответствующую часть из файла
+all-hipster-shop.yaml
+ingress.yaml - должен разворачивать ingress с доменным именем
+shop.<IP-адрес>.nip.io
+************************************************************
+helm3 upgrade --install frontend kubernetes-templating/frontend --namespace hipster-shop
+
+***********************************************************
+Как должен выглядеть минимальный итоговый файл
+values.yaml:
+image:
+tag: v0.1.3
+replicas: 1
+service:
+type: NodePort
+port: 80
+targetPort: 8079
+NodePort: 30001
+*******************************************************************
+
+Добавьте chart frontend как зависимость
+Обновим зависимости:
+При указании зависимостей в старом формате, все будет
+работать, единственное выдаст предупреждение. Подробнее
+dependencies:
+- name: frontend
+version: 0.1.0
+repository: "file://../frontend"
+
+helm dep update kubernetes-templating/hipster-shop

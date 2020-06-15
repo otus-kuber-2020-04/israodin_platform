@@ -9,7 +9,8 @@ variable "region" {
 provider "google" {
   project = var.project_id
   region  = var.region
-  credentials = "/Users/israodin/.config/gcloud/application_default_credentials.json"
+  # credentials = "/Users/israodin/.config/gcloud/application_default_credentials.json"
+  credentials = "Infra-1ea908e4a1d5.json"
 }
 
 # VPC
