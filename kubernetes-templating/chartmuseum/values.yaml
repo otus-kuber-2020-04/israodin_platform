@@ -4,10 +4,10 @@ ingress:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: "letsencrypt-production" 
   hosts:
-    - name: chartmuseum.35.239.21.134.nip.io
+    - name: chartmuseum.35.224.3.195.nip.io
       path: /
       tls: true
-      tlsSecret: chartmuseum.35.239.21.134.nip.io
+      tlsSecret: chartmuseum.35.224.3.195.nip.io
 securityContext: {}
 env:
     open:

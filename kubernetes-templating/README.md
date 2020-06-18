@@ -9,10 +9,11 @@ helm3 upgrade --install nginx-ingress stable/nginx-ingress --wait  --namespace=n
 helm3 repo add jetstack https://charts.jetstack.io
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager-legacy.crds.yaml
 kubectl create ns cert-manager
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation="true"
 helm3 upgrade --install cert-manager jetstack/cert-manager --wait  --namespace=cert-manager --version=0.15.1
 helm3 install cert-manager jetstack/cert-manager  --namespace cert-manager  --version v0.15.1 
 kubectl apply -f cluster-issuer-prod.yaml
-kkubectl apply -f cluster-issuer-stage.yaml
+kubectl apply -f cluster-issuer-stage.yaml
 
 ###install chartmuseum
 kubectl create ns chartmuseum
