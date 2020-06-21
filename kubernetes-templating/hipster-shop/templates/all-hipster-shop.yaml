@@ -78,7 +78,7 @@ spec:
         - containerPort: 7070
         env:
         - name: REDIS_ADDR
-          value: "redis-cart:6379"
+          value: "redis-master:6379"
         - name: PORT
           value: "7070"
         - name: LISTEN_ADDR
@@ -284,10 +284,6 @@ spec:
   - name: grpc
     port: 5000
     targetPort: 8080
-
-
-# frontend
----
 
 
 

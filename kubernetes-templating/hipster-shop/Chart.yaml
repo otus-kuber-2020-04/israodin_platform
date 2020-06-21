@@ -1,4 +1,3 @@
- 
 apiVersion: v2
 name: hipster-shop
 description: A Helm chart for Kubernetes
@@ -27,4 +26,8 @@ dependencies:
   - name: frontend
     version: 0.1.0
     repository: "file://../frontend"
-  
+  - name: redis
+    version: 10.6.17
+    repository: "https://charts.bitnami.com/bitnami"
+
+    

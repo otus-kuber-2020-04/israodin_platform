@@ -9,13 +9,12 @@ metadata:
 spec:
   tls:
   - hosts:
-    - shop.35.224.3.195.nip.io
-    secretName: shop.35.224.3.195.nip.io
+    - shop.104.154.141.175.nip.io
+    secretName: shop.104.154.141.175.nip.io
   rules:
-  - host: shop.35.224.3.195.nip.io
+  - host: shop.104.154.141.175.nip.io
     http:
       paths:
       - backend:
           serviceName: frontend
           servicePort:  8080
-     
