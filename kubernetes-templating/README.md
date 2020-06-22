@@ -12,7 +12,6 @@ kubectl create ns cert-manager
 kubectl label namespace cert-manager certmanager.k8s.io/disable-validation="true"
 helm3 upgrade --install cert-manager jetstack/cert-manager --wait  --namespace=cert-manager --version=0.15.1
 helm3 install cert-manager jetstack/cert-manager  --namespace cert-manager  --version v0.15.1 
-Проверим, что cert-manager успешно развернут и работает:
 kubectl get pods --namespace cert-manager
 
 NAME                                       READY   STATUS    RESTARTS   AGE
