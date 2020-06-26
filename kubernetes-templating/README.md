@@ -209,3 +209,54 @@ visibleKey: hiddenValue
 Теперь осталось понять, как добавить значение нашего секрета в настоящий секрет kubernetes и устанавливать его вместе с основным helm chart.
 Создадим в директории kubernetestemplating/frontend/templates еще один файл secret.yaml.
 Несмотря на похожее название его предназначение будет отличаться.
+
+helm secrets upgrade --install frontend kubernetes-templating/frontend --namespace hipster-shop \
+-f kubernetes-templating/frontend/values.yaml \
+-f kubernetes-templating/frontend/secrets.yaml
+
+
+Поместим все получившиеся helm chart's в наш установленный harbor в публичный проект.
+Установим helm-push
+helm plugin install https://github.com/chartmuseum/helm-push.git
+Создадим файл kubernetes-templating/repo.sh со следующим содержанием:
+#!/bin/bash
+helm repo add templating https://harbor.35.189.202.237.nip.io/chartrepo/library
+
+helm push --username admin --password Harbor12345  frontend/ templating
+helm push --username admin --password Harbor12345  hipster-shop/ templating
+./repo.sh
+"templating" has been added to your repositories
+Pushing frontend-0.1.0.tgz to templating...
+Done.
+Pushing hipster-shop-0.1.0.tgz to templating...
+Done.
+Проверим:
+Представим, что одна из команд разрабатывающих сразу несколько микросервисов нашего продукта решила, что helm не подходит для ее нужд и попробовала использовать решение на основе jsonnet - kubecfg.
+Посмотрим на возможности этой утилиты. Работать будем с сервисами paymentservice и shippingservice. Для начала - вынесем манифесты описывающие service и deployment для этих микросервисов из файла all-hipstershop.yaml в директорию kubernetes-templating/kubecfg
+Проверим:
+helm search repo -l templating
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+templating/frontend     0.1.0           1.16.0          A Helm chart for Kubernetes
+templating/hipster-shop 0.1.0           1.16.0          A Helm chart for Kubernetes
+И развернем:
+helm upgrade --install hipster-shop templating/hipster-shop --namespace hipster-shop
+helm upgrade --install frontend templating/frontend --namespace hipster-shop
+
+
+Kubecfg
+Представим, что одна из команд разрабатывающих сразу несколько микросервисов нашего продукта решила, что helm не подходит для ее нужд и попробовала использовать решение на основе jsonnet - kubecfg.
+Посмотрим на возможности этой утилиты. Работать будем с сервисами paymentservice и shippingservice.
+Для начала - вынесем манифесты описывающие service и deployment для этих микросервисов из файла all-hipstershop.yaml в директорию kubernetes-templating/kubecfg
+В итоге должно получиться четыре файла:
+tree -L 1 kubecfg
+kubecfg
+├── paymentservice-deployment.yaml
+├── paymentservice-service.yaml
+├── shippingservice-deployment.yaml
+└── shippingservice-service.yaml
+Можно заметить, что манифесты двух микросервисов очень похожи друг на друга и может иметь смысл генерировать их из какого-то шаблона.
+
+
+gpg --full-generate-key
+sops -e -i --pgp B31B7A4D262506810D1BBB09BD8C87245FC85F07 kubernetes-templating/frontend/secrets.yaml
+helm3 secrets view kubernetes-templating/frontend/secrets.yaml
